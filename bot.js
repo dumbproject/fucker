@@ -26,11 +26,14 @@ client.on('message', message => {
   if (message.author.bot) return;
   // if (message.content.toLowerCase() === 'help') {
   if (message.content.match(/help/gi)) {
-    message.channel.send('Commands list:\n                     - help\n                     - ping\n                     - coffee\n                         > sip\n                         > refill\n                         > cups\n                     - die');
+    message.channel.send('Commands list:\n[help, ping, coffee {sip, refill, cups}, die]');
   }
   // if (message.content.toLowerCase() === 'ping') {
   if (message.content.match(/ping/gi)) {
     message.channel.send('pong @' + client.ping + 'ms');
+  }
+  if (message.content.match(/say/gi)) {
+    message.channel.send(message.content);
   }
 // coffee commands
   // if (message.content.toLowerCase() === 'coffee') {

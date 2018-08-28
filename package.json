@@ -1,0 +1,24 @@
+{
+  "name": "fucker",
+  "version": "1.0.0",
+  "description": "a discord bot.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zzivnuska/fucker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zzivnuska/fucker/issues"
+  },
+  "homepage": "https://github.com/zzivnuska/fucker#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "discord.js": "^11.4.2",
+    "fs": "0.0.1-security"
+  }
+}
