@@ -4,9 +4,6 @@ const fs = require('fs');
 const chalk = require('chalk');
 const private = require('./private.json');
 let coffee = JSON.parse(fs.readFileSync("./coffee.json", "utf8"));
-// const coffee = require('./coffee.json');
-// const prefix = "";
-// const iching = require('./iching.js');
 
 // login
 client.login(private.token)
@@ -14,12 +11,10 @@ client.on('ready', () => {
   console.log(chalk.black.bgRed('\n    A C T I V A T E D    '));
   console.log(chalk.blue.bgMagenta(`Logged in as ${client.user.tag} \n`));
   client.user.setActivity('being a difficult bot');
-  // message.channel.send('i\'m alive!');
 });
 
 // listener
 client.on('typingStart', (channel, user) => {
-  // console.log(`${user.tag} started to type at ${channel.name}`);
   console.log(chalk.magenta(`${user.tag}`) + ` started to type at ` + chalk.cyan(`${channel.name}`));
 });
 client.on('typingStop', (channel, user) => {
@@ -29,14 +24,6 @@ client.on('typingStop', (channel, user) => {
 // commands
 client.on('message', message => {
   if (message.author.bot) return;
-  // switch(message.content.toLowerCase()) {
-   // case '':
-   // resetBot(message.channel);
-   // break;
-  // }
-
-  // let string = message.content;
-  // .replace(/^[abc|0-9|\s+]|[abc|0-9|\s+]$/gm, '')
   // if (message.content.toLowerCase() === 'help') {
   if (message.content.match(/help/gi)) {
     message.channel.send('Commands list:\n                     - help\n                     - ping\n                     - coffee\n                         > sip\n                         > refill\n                         > cups\n                     - die');
@@ -45,7 +32,6 @@ client.on('message', message => {
   if (message.content.match(/ping/gi)) {
     message.channel.send('pong @' + client.ping + 'ms');
   }
-
 // coffee commands
   // if (message.content.toLowerCase() === 'coffee') {
   if (message.content.match(/coffee/gi)) {
@@ -84,10 +70,6 @@ client.on('message', message => {
     if (err) console.error(err)
   });
 
-  // if (message.content === 'iching') {
-  //   iching.create;
-  // }
-
   if (message.content.toLowerCase() === 'die') {
   // if (message.content.match(/die/gi)) {
     console.log(":\'(");
@@ -105,38 +87,3 @@ client.on('message', message => {
     }
   }
 });
-
-
-  // for (i=0;i<1;i++) {
-  //   message.channel.send('ACTIVATED');
-  // }
-  // if (message.content.toLowerCase() === 'say') {
-  //   message.channel.send('/tts ' + query)
-  // }
-
-  // if (message.content === 'p!slots') {
-  //   message.channel.send('p!slots');
-  // }
-  // if (message.content === 'recursive') {
-  //   if (message.content === 'STOP') {
-  //     return;
-  //   } else {
-  //     message.channel.send('recursive');
-  //   }
-  // }
-
-
-  // if (message.content === '') {
-  //   message.channel.send('');
-  // }
-
-
-// unused
-// var truth = true;
-// while (truth === true) {
-//   for (i = 0; i < 100; i++) {
-//     setTimeout(function(){
-//       message.channel.send('hourly reminder to drink water!!!!');
-//     }, 10000);
-//   }
-// }
