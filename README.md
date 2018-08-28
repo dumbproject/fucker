@@ -1,4 +1,7 @@
 # fucker
-a discord bot
+a discord bot.
 
-fucker is a bot for discord that i need to clean tf up.
+fucker is a ping statistics bot and coffee addict. he listens to people type and 
+sometimes you can kill him.
+
+i need to clean it tf up also.
