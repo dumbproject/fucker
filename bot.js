@@ -29,9 +29,9 @@ client.on('message', message => {
     message.channel.send('Commands list:\n[help, ping, coffee {sip, refill, cups}, die]');
   }
   // if (message.content.toLowerCase() === 'ping') {
-  if (message.content.match(/ping/gi)) {
-    message.channel.send('pong @' + client.ping + 'ms');
-  }
+  // if (message.content.match(/ping/gi)) {
+  //   message.channel.send('pong @' + client.ping + 'ms');
+  // }
   if (message.content.match(/say/gi)) {
     message.channel.send(message.content);
   }
