@@ -76,6 +76,10 @@ client.on('message', (message, err) => {
   if (content.match(/help/gi)) {
     send('Commands list:\n[toggle, help, ping, time {timestamp/time/tim/tyme/tym}, cool, hi, dog, f, say, sup, assassinate, blam, kms, snipe, asdf, coffee {sip/refill/cups/sips}, die]');
   }
+  if (content.match(/uptime/gi)) {
+    send('fucker been alive for ' + client.uptime / 1000 + ' seconds');
+  }
+
 
   // exports.run = async (client, nessage, args) => {
   //   const msg = await message.channel.send('ping');
