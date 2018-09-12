@@ -76,6 +76,12 @@ client.on('message', (message, err) => {
   if (content.match(/help/gi)) {
     send('Commands list:\n[toggle, help, ping, time {timestamp/time/tim/tyme/tym}, cool, hi, dog, f, say, sup, assassinate, blam, kms, snipe, asdf, coffee {sip/refill/cups/sips}, die]');
   }
+
+  // exports.run = async (client, nessage, args) => {
+  //   const msg = await message.channel.send('ping');
+  //   msg.edit(`pong @${msg.createdTimestamp - message.createdTimestamp}ms. api latency = ${Math.round(client.ping)}ms`);
+  // };
+
   // if (content.match(/ping/gi) && !content.match(/pings/gi)) {
   if (content.match(/ping/gi)) {
     send('pong @' + client.ping + 'ms');
