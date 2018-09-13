@@ -6,7 +6,7 @@ sometimes you can kill him.
 
 i need to clean it tf up also.
 
--
+- - - - - - - - - - -
 
 no prefix currently, 'help' for command list
 
