@@ -79,6 +79,12 @@ client.on('message', (message, err) => {
   if (content.match(/uptime/gi)) {
     send('fucker been alive for ' + client.uptime / 1000 + ' seconds');
   }
+  if (content.match(/upmin/gi)) {
+    send('fucker been alive for ' + client.uptime / 60000 + ' minutes');
+  }
+  if (content.match(/uphour/gi)) {
+    send('fucker been alive for ' + client.uptime / 3600000 + ' hours');
+  }
 
 
   // exports.run = async (client, nessage, args) => {
