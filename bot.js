@@ -48,7 +48,7 @@ client.on('typingStop', (channel, user) => {
 // 3. scheduler
 // #############################################################################
 var reminder = schedule.scheduleJob('0 * * * *', function(){
-  client.channels.get('442797683955073025', '481614978437218329').send('hourly reminder!!!!! drink fucking water!!!!!')
+  client.channels.get('442797683955073025', '481614978437218329').send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
 });
 var weedpm = schedule.scheduleJob('20 16 * * *', function(){
   client.channels.get('442797683955073025').send('420 BLAZE IT')
