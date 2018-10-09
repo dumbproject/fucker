@@ -27,6 +27,7 @@ client.on('ready', () => {
   client.user.setActivity('god (killing ants)');
   client.channels.get('442797683955073025').send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
   sip(client.channels.get('442797683955073025'));
+  client.channels.get('442797683955073025').send('good bean juice taste like chocolate make me go fast');
   // console.log('currently running on host ' + oshostname);
 });
 
@@ -116,7 +117,7 @@ client.on('message', (message, err) => {
 
 
   if (content === 'BOO') {
-    send('aaaaa!!!!!! a ghost!!!!');
+    send('aaaaa!!!!!! a ghost!!!!').delete(200);
     send('this is broken btw');
     // message.delete(2000);
   }
