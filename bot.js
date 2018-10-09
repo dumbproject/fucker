@@ -12,11 +12,22 @@ const { refill, sip, cups, sips } = require('./commands/coffee.js');
 const { timestamp, time, tim, tyme, tym } = require ('./commands/time.js');
 // const cowsay = require('./cowsay.json');
 
+const fs = require('fs');
+let coffee = JSON.parse(fs.readFileSync("./commands/coffee.json", "utf8"));
+// console.log('coffee', coffee);
+const writeToFile = () => fs.writeFile("./commands/coffee.json", JSON.stringify(coffee), (err) =>{
+  if (err) console.error(err)
+});
+
+
 const oshostname = os.hostname();
 const ostype = os.type();
 const osplatform = os.platform();
 const osrelease = os.release();
 const osuptime = os.uptime();
+
+const gamb = '442797683955073025';
+const test = '481614978437218329';
 
 // 1. login
 // #############################################################################
@@ -25,9 +36,12 @@ client.on('ready', () => {
   console.log(chalk.black.bgRed('\n    A C T I V A T E D    \n') + chalk.magenta.bgBlue(`Logged in as ${client.user.tag} \n`));
   console.log('███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝');
   client.user.setActivity('god (killing ants)');
-  client.channels.get('442797683955073025').send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
-  sip(client.channels.get('442797683955073025'));
-  client.channels.get('442797683955073025').send('good bean juice taste like chocolate make me go fast');
+  client.channels.get(gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
+  if (coffee.pot === 0) {
+    refill(client.channels.get(gamb))
+  }
+  sip(client.channels.get(gamb));
+  client.channels.get(gamb).send('good bean juice taste like chocolate make me go fast');
   // console.log('currently running on host ' + oshostname);
 });
 
@@ -49,19 +63,19 @@ client.on('typingStop', (channel, user) => {
 // 3. scheduler
 // #############################################################################
 var reminder = schedule.scheduleJob('0 * * * *', function(){
-  client.channels.get('442797683955073025', '481614978437218329').send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
+  client.channels.get(gamb).send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
 });
 var weedpm = schedule.scheduleJob('20 16 * * *', function(){
-  client.channels.get('442797683955073025').send('420 BLAZE IT')
+  client.channels.get(gamb).send('420 BLAZE IT')
 });
 var wausam = schedule.scheduleJob('20 4 * * *', function(){
-  client.channels.get('442797683955073025').send('420 BLAZE IT')
+  client.channels.get(gamb).send('420 BLAZE IT')
 });
 var wauspm = schedule.scheduleJob('20 9 * * *', function(){
-  client.channels.get('442797683955073025').send('420 BLAZE IT')
+  client.channels.get(gamb).send('420 BLAZE IT')
 });
 var weedam = schedule.scheduleJob('20 20 * * *', function(){
-  client.channels.get('442797683955073025').send('420 BLAZE IT')
+  client.channels.get(gamb).send('420 BLAZE IT')
 });
 
 let useRegEx = false;
