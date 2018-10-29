@@ -2,15 +2,11 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const private = require('./private.json');
 const os = require('os');
-// modules
 // const moment = require('moment-timezone');
 const schedule = require('node-schedule');
-// unneccessary modules
 const chalk = require('chalk');
-// other fucker files
 const { refill, sip, cups, sips } = require('./commands/coffee.js');
 const { timestamp, time, tim, tyme, tym } = require ('./commands/time.js');
-// const cowsay = require('./cowsay.json');
 
 const fs = require('fs');
 let coffee = JSON.parse(fs.readFileSync("./commands/coffee.json", "utf8"));
@@ -19,13 +15,12 @@ const writeToFile = () => fs.writeFile("./commands/coffee.json", JSON.stringify(
   if (err) console.error(err)
 });
 
-
 const oshostname = os.hostname();
 const ostype = os.type();
 const osplatform = os.platform();
 const osrelease = os.release();
 const osuptime = os.uptime();
-
+// special channel id's
 const gamb = '442797683955073025';
 const test = '481614978437218329';
 
@@ -33,9 +28,12 @@ const test = '481614978437218329';
 // #############################################################################
 client.login(private.token)
 client.on('ready', () => {
-  console.log(chalk.black.bgRed('\n    A C T I V A T E D    \n') + chalk.magenta.bgBlue(`Logged in as ${client.user.tag} \n`));
-  console.log('███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝');
-  client.user.setActivity('god (killing ants)');
+  client.user.setActivity('the drums');
+  console.log(chalk.magenta.bgCyan('\n    A C T I V A T E D    \n') + chalk.cyan.bgMagenta(`Logged in as ${client.user.tag} \n`));
+  console.log(chalk.cyan('███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝'));
+  console.log(chalk.inverse(`\nThere are ${client.users.size} users in ${client.channels.size} channels of ${client.guilds.size} guilds.\n`));
+
+  // morning coffee sips
   client.channels.get(gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
   if (coffee.pot === 0) {
     refill(client.channels.get(gamb))
@@ -83,6 +81,7 @@ let useRegEx = false;
 // 4. commands
 // #############################################################################
 client.on('message', (message, err) => {
+  if (message.author.bot) return;
   if (err) message.channel.send(err);
   // fix this
 
@@ -94,13 +93,12 @@ client.on('message', (message, err) => {
     message.channel.send(string);
   }
 
-  // ignore bots
-  if (message.author.bot) return;
-  // if (message.author !== '480858899369426955') {
-  //   if (message.author.bot) {
-  //     return;
-  //   }
-  // }
+
+  // if (message.content.indexOf(config.prefix) !== 0) return;
+  // change to private.prefix, also set prefix
+
+  // const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  // const command = args.shift().toLowerCase();
 
   // fiddling w switching between using regex (for global + case insensitive) and exact matching (more traditional, in line with using a prefix)
   const match = arg => {
@@ -122,6 +120,7 @@ client.on('message', (message, err) => {
   }
   // #############################################################################
   // end intro bullshit, start command responses
+
   if (content.match(/help/gi)) {
     send('𝔉𝔘ℭ𝔎𝔈ℜ 𝔦𝔰 𝔞 𝔡𝔦𝔰𝔠𝔬𝔯𝔡 𝔟𝔬𝔱 𝔞𝔫𝔡 𝔠𝔬𝔣𝔣𝔢𝔢 𝔞𝔡𝔡𝔦𝔠𝔱.\ntype the word \'commands\' to get a list of commands.')
   }
@@ -130,10 +129,14 @@ client.on('message', (message, err) => {
   }
 
 
-  if (content === 'BOO') {
-    send('aaaaa!!!!!! a ghost!!!!').delete(200);
-    send('this is broken btw');
-    // message.delete(2000);
+  if (message.content === 'BOO') {
+    message.delete(300).catch(fuck=>{});
+    send('aaaaa!!!!!! a ghost!!!!');
+    try {
+      let result = await dosomething()
+    } catch(e) {
+      console.log('err', err)
+    }
   }
 
 
@@ -194,6 +197,40 @@ client.on('message', (message, err) => {
   // if (content.match(/whoami/gi)) {
   //   send(os.hostname());
   // }
+
+  if (content.match(/google/gi)) {
+    var str = message.content;
+    var query = str.match()
+    send('https://www.google.com/search?q=' + message.content)
+  }
+
+
+  var rand = Math.floor(Math.random())
+  if (content.match(/dice/gi)) {
+    var d1 = Math.floor(Math.random() * 6 + 1);
+    var d2 = Math.floor(Math.random() * 6 + 1);
+    send('You rolled ' + (d1 + d2) + '. (' + d1 + ' and ' + d2 + ')');
+  }
+  if (content.match(/cc/gi)) {
+    // var cc = Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' | CV: ' + Math.floor(Math.random() * 900 + 100) + ' | Expires ';
+    function n() {
+      return Math.floor(Math.random() * 9000 + 1000)
+    }
+    var cc = n() + ' ' + n() + ' ' + n() + ' ' + n() + ' | CV: ' + Math.floor(Math.random() * 900 + 100) + ' | Expires ';
+    var m = Math.floor(Math.random() * 12 + 1);
+    if (m === 4 || 6 || 9 || 11) {
+      var d = Math.floor(Math.random() * 30 + 1);
+    } else if (m === 2) {
+      var d = Math.floor(Math.random() * 28 + 1);
+    } else {
+      var d = Math.floor(Math.random() * 31 + 1);
+    }
+    send('`' + cc + m + '/' + d + '`');
+  }
+  if (content.match(/ssn/gi)) {
+    var ssn = Math.floor(Math.random() * 900 + 100) + '-' + Math.floor(Math.random() * 90 + 10) + '-' + Math.floor(Math.random() * 9000 + 1000);
+    send(ssn);
+  }
 
   if (content.match(/asdf/gi)) {
     var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -309,4 +346,9 @@ client.on('message', (message, err) => {
       .then(() => client.login(private.token));
     }
   }
+});
+
+client.on("messageDelete", (messageDelete) => {
+  // messageDelete.channel.send(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} was deleted.`)
+  console.log(chalk.bgRed(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} was deleted.`));
 });
