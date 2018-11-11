@@ -1,5 +1,7 @@
 node_modules/
 private.json
+
 log.txt
 needtofix/
 cheatcodes.txt
+unused.js

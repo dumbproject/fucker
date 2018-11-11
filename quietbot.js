@@ -23,12 +23,12 @@ client.on('ready', () => {
   console.log(chalk.inverse(`\nThere are ${client.users.size} users in ${client.channels.size} channels of ${client.guilds.size} guilds.\n`));
 
   // morning coffee sips
-  client.channels.get(private.gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
-  if (coffee.pot === 0) {
-    refill(client.channels.get(private.gamb))
-  }
-  sip(client.channels.get(private.gamb));
-  client.channels.get(private.gamb).send('good bean juice taste like chocolate make me go fast');
+  // client.channels.get(private.gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
+  // if (coffee.pot === 0) {
+  //   refill(client.channels.get(private.gamb))
+  // }
+  // sip(client.channels.get(private.gamb));
+  // client.channels.get(private.gamb).send('good bean juice taste like chocolate make me go fast');
   console.log('currently running on host ' + os.hostname());
 });
 
@@ -222,13 +222,13 @@ client.on('message', (message, err) => {
     send('```███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝```');
   }
 
-  if (content.match(/hi/gi) && !content.match(/HI/g)) {
+  if (content.match(/hi/i) && !content.match('HI')) {
     send('hi');
   }
-  if (content.match(/HI/g)) {
+  if (content.match('HI')) {
     send('HI');
   }
-  if (content.match(/sup/gi)) {
+  if (content.match(/sup/i)) {
     send('not much supwitchu');
   }
   if (content.match(/cool/gi)) {
@@ -245,14 +245,14 @@ client.on('message', (message, err) => {
   if (message.content === 'f') {
     send('uck');
   }
-  if (message.content.match(/say/gi)) {
+  if (message.content.match(/say/i)) {
     send(message.content);
   }
-  if (content.match(/assassinate/gi)) {
+  if (content.match(/assassinate/i)) {
     var input = message.content.split(' ').slice(1).join(' ');
     send(input + ' has been killed.');
   }
-  if (content.match(/blam/gi)) {
+  if (content.match(/blam/i)) {
     var input = message.content.split(' ').slice(1).join(' ');
     send(input + ' got their shit ROCKED.');
   }
@@ -289,19 +289,19 @@ client.on('message', (message, err) => {
   // #####################################################################################################
   // coffee commands
   // if (message.content.toLowerCase() === 'coffee') {
-  if (message.content.match(/coffee/gi)) {
+  if (message.content.match(/coffee/i)) {
     send('Hi! Would you like a cup of coffee? [sip, refill, cups, sips]')
   }
-  if (content.match(/sip/gi) && !content.match(/sips/gi)) {
+  if (content.match(/sip/i) && !content.match(/sips/i)) {
     sip(channel)
   }
-  if (content.match(/refill/gi)) {
+  if (content.match(/refill/i)) {
     refill(channel);
   }
-  if (content.match(/cups/gi)) {
+  if (content.match(/cups/i)) {
     cups(channel);
   }
-  if (content.match(/sips/gi)) {
+  if (content.match(/sips/i)) {
     sips(channel);
   }
 
