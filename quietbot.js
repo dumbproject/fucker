@@ -48,10 +48,10 @@ client.on('typingStop', (channel, user) => {
 var reminder = schedule.scheduleJob('0 * * * *', function(){
   client.channels.get(private.gamb).send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
 });
-var weedpm = schedule.scheduleJob('20 16 * * *', function(){
+var weedam = schedule.scheduleJob('20 4 * * *', function(){
   client.channels.get(private.gamb).send('420 BLAZE IT')
 });
-var wausam = schedule.scheduleJob('20 4 * * *', function(){
+var weedpm = schedule.scheduleJob('20 16 * * *', function(){
   client.channels.get(private.gamb).send('420 BLAZE IT')
 });
 var wauspm = schedule.scheduleJob('20 9 * * *', function(){
@@ -110,27 +110,11 @@ client.on('message', (message, err) => {
     send('Commands list:\n```about: help, commands, ping, uptime/upmin/uphour\ninfo: time {time/tim/timestamp}\nactions: coffee {sip/refill/cups/sips}, assassinate, blam, kms, asdf\nresponses: hi, sup, cool, dog, say, f, snipe\nkill the bot: die```');
   }
 
-
-  if (message.content === 'BOO') {
-    message.delete(300).catch(fuck=>{});
-    send('aaaaa!!!!!! a ghost!!!!');
-    // try {
-    //   let result = await dosomething()
-    // } catch(e) {
-    //   console.log('err', err)
-    // }
-  }
-
-
-
-
   var jacket = 0;
   if (content.match(/\$jacket/gi)) {
     jacket += 1;
     send('Indica has made ' + jacket + ' peoples\' days')
   }
-
-
 
   // exports.run = async (client, nessage, args) => {
   //   const msg = await message.channel.send('ping');
@@ -185,7 +169,6 @@ client.on('message', (message, err) => {
     send('https://www.google.com/search?q=' + query)
   }
 
-
   var rand = Math.floor(Math.random())
   if (content.match(/dice/gi)) {
     var d1 = Math.floor(Math.random() * 6 + 1);
@@ -207,14 +190,29 @@ client.on('message', (message, err) => {
     send(ssn);
   }
 
+  // if (content.match(/asdf/gi)) {
+  //   var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  //   var word = '';
+  //   while (word.length < 4) {
+  //     word = word + abc[Math.floor(Math.random() * abc.length)];
+  //   }
+  //   message.channel.send(word);
+  //   // console.log('word', word)
+  // }
   if (content.match(/asdf/gi)) {
+    var msg = content.match(/\d+/g);
     var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     var word = '';
-    while (word.length < 4) {
-      word = word + abc[Math.floor(Math.random() * abc.length)];
+    if (!isNaN(msg)) {
+      while (word.length < msg) {
+        word = word + abc[Math.floor(Math.random() * abc.length)];
+      }
+    } else {
+      while (word.length < 4) {
+        word = word + abc[Math.floor(Math.random() * abc.length)];
+      }
     }
     message.channel.send(word);
-    // console.log('word', word)
   }
 
 
@@ -222,7 +220,7 @@ client.on('message', (message, err) => {
     send('```███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝```');
   }
 
-  if (content.match(/hi/i) && !content.match('HI')) {
+  if (content === (/hi/i) && !content === ('HI')) {
     send('hi');
   }
   if (content.match('HI')) {
@@ -237,11 +235,12 @@ client.on('message', (message, err) => {
   if (content.match(/dog/gi)) {
     send('dog');
   }
-  // if (message.content === 'c') {
-  //   var cool = 'cool ';
-  //   var rand = Math.floor(Math.random * 20);
-  //   message.channel.send(':sparkles: indica is ' + cool.repeat(rand) + ':sparkles:');
-  // }
+  if (content === 'iic') {
+    var c = 'cool ';
+    var msg = '';
+    msg = msg + c.repeat(Math.floor(Math.random() * 20 + 1))
+    send(':sparkles: indica is ' + msg + ':sparkles:');
+  }
   if (message.content === 'f') {
     send('uck');
   }
@@ -263,15 +262,6 @@ client.on('message', (message, err) => {
     // var input = message.content.split(' ').slice(1).join(' ');
     send('(　-_･) ︻デ═一 ▸');
   }
-
-  // if (content === 'ssn') {
-  //   var digit = Math.floor(Math.random * 4);
-  //   var ssn = digit + digit + digit + '-' + digit + digit + '-' + digit + digit + digit + digit;
-  //   send(ssn);
-  // }
-  // if (content === 'cc' {
-  //   send();
-  // }
 
   // if (content.match(/kiss/gi)) {
   //   send(':shamaDab: ' + message.content + ' :shamaKiss:');
@@ -320,6 +310,24 @@ client.on('message', (message, err) => {
     message.channel.send('rebooting...')
     .then(msg => client.destroy())
     .then(() => client.login(private.token));
+  }
+  // if (message.content === 'BOO') {
+  //   message.delete(300).catch(fuck=>{});
+  //   send('aaaaa!!!!!! a ghost!!!!')
+  //     .then(msg => console.log(`Deleted message from ${msg.author.username}`))
+  //     .catch(console.error);
+  // }
+});
+
+// stolen
+client.on('message', async message => {
+  if (message.content === "ping") {
+    const m = await message.channel.send("Ping?");
+    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
+  }
+  if (message.content.match(/boo/gi)) {
+    const m = await message.channel.send("aaaaaaa!!! a ghost!!");
+    m.delete(300);
   }
 });
 

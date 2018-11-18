@@ -10,10 +10,31 @@ i need to clean it tf up also.
 
 no prefix currently, 'help' for command list
 
-> 'ping' for client.ping
-
-> 'time' for current us west coast time
-
-> 'sip' to take a sip of complimentary coffee
-
-> 'die' to run broken code and possibly kill the bot
+current commands (for personal reference):
+toggle
+help
+commands
+jacket
+ping
+timestamp/time/tim/tyme/tym
+uptime/upmin/uphour
+hostinfo
+google
+dice
+cc
+ssn
+asdf
+fucker
+hi/HI
+sup
+cool
+dog
+iic
+f
+say
+assassinate/blam/kms
+snipe
+perry/wris/god
+coffee/sip/refill/cups/sips
+die/reboot
+boo

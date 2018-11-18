@@ -264,15 +264,6 @@ client.on('message', (message, err) => {
     send('(　-_･) ︻デ═一 ▸');
   }
 
-  // if (content === 'ssn') {
-  //   var digit = Math.floor(Math.random * 4);
-  //   var ssn = digit + digit + digit + '-' + digit + digit + '-' + digit + digit + digit + digit;
-  //   send(ssn);
-  // }
-  // if (content === 'cc' {
-  //   send();
-  // }
-
   // if (content.match(/kiss/gi)) {
   //   send(':shamaDab: ' + message.content + ' :shamaKiss:');
   // }
