@@ -281,7 +281,7 @@ client.on('message', (message, err) => {
   }
 
   if (content.toLowerCase() === 'die') {
-    send('ouch');
+    send('ouch that hurt `lifespan: ' + client.uptime / 1000 + ' seconds`');
     console.log('deaded');
     function die() {
       console.log("\n:\'(\n");
