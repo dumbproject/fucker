@@ -5,6 +5,10 @@ const os = require('os');
 // const moment = require('moment-timezone');
 const schedule = require('node-schedule');
 const chalk = require('chalk');
+const googleimages = require('google-images');
+const md5 = require('md5');
+const sha256 = require('sha256');
+
 const { refill, sip, cups, sips } = require('./commands/coffee.js');
 const { timestamp, time, tim, tyme, tym } = require ('./commands/time.js');
 
@@ -15,13 +19,17 @@ const writeToFile = () => fs.writeFile("./commands/coffee.json", JSON.stringify(
   if (err) console.error(err)
 });
 
+function rand(num) {
+  return Math.floor(Math.random() * num);
+}
+
 client.login(private.token)
 client.on('ready', () => {
   client.user.setActivity('the drums');
   console.log(chalk.magenta.bgCyan('\n    A C T I V A T E D    \n') + chalk.cyan.bgMagenta(`Logged in as ${client.user.tag} \n`));
   console.log(chalk.cyan('███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝'));
   console.log(chalk.inverse(`\nThere are ${client.users.size} users in ${client.channels.size} channels of ${client.guilds.size} guilds.\n`));
-
+  console.log('currently running on host ' + os.hostname());
   // morning coffee sips
   // client.channels.get(private.gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
   // if (coffee.pot === 0) {
@@ -29,7 +37,6 @@ client.on('ready', () => {
   // }
   // sip(client.channels.get(private.gamb));
   // client.channels.get(private.gamb).send('good bean juice taste like chocolate make me go fast');
-  console.log('currently running on host ' + os.hostname());
 });
 
 // error handling????? does this work???
@@ -48,18 +55,18 @@ client.on('typingStop', (channel, user) => {
 var reminder = schedule.scheduleJob('0 * * * *', function(){
   client.channels.get(private.gamb).send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
 });
-var weedam = schedule.scheduleJob('20 4 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-var weedpm = schedule.scheduleJob('20 16 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-var wauspm = schedule.scheduleJob('20 9 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-var weedam = schedule.scheduleJob('20 20 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
+// var weedam = schedule.scheduleJob('20 4 * * *', function(){
+//   client.channels.get(private.gamb).send(':flag_us: 420 BLAZE IT :flag_us:')
+// });
+// var weedpm = schedule.scheduleJob('20 16 * * *', function(){
+//   client.channels.get(private.gamb).send(':flag_us: 420 BLAZE IT :flag_us:')
+// });
+// var wausam = schedule.scheduleJob('20 23 * * *', function(){
+//   client.channels.get(private.gamb).send(':flag_au: 420 BLAZE IT :flag_au:')
+// });
+// var wauspm = schedule.scheduleJob('20 11 * * *', function(){
+//   client.channels.get(private.gamb).send(':flag_au: 420 BLAZE IT :flag_au:')
+// });
 
 let useRegEx = false;
 
@@ -68,66 +75,50 @@ client.on('message', (message, err) => {
   if (err) message.channel.send(err);
   // fix this
 
-  // condense necessary parameters
-  // is this working 100%?
   const { channel, content } = message;
-  // condense necessary parameters pt. 2
-  const send = string => {
-    message.channel.send(string);
-  }
-
-
-  // if (message.content.indexOf(config.prefix) !== 0) return;
-  // change to private.prefix, also set prefix
-
-  // const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  // const command = args.shift().toLowerCase();
-
-  // fiddling w switching between using regex (for global + case insensitive) and exact matching (more traditional, in line with using a prefix)
   const match = arg => {
+    // return message.content.match(arg);
     if (useRegEx) {
       return message.content.match(arg);
-      // console.log('regex')
-      // console.log('match --->', message.content.match(arg));
+      console.log('regex');
+      console.log('match --->', message.content.match(arg));
     }
     else {
       return (message.content.toLowerCase() === arg);
-      // console.log('===')
-      // console.log(message.content.toLowerCase() + '===' + arg)
+      console.log('===');
+      console.log(message.content.toLowerCase() + '===' + arg)
     }
   }
+  const send = string => {
+    message.channel.send(string);
+  }
+  // if (message.content.indexOf(config.prefix) !== 0) return;
+  // const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  // const command = args.shift().toLowerCase();
+
   if (match('toggle')) {
     useRegEx = !useRegEx;
     console.log('useRegEx', useRegEx);
     send('useRegEx', useRegEx);
+    send(useRegEx);
   }
-
-
-  if (content.match(/help/gi)) {
+  if (match(/about/i)) {
+    send('https://github.com/zzivnuska/fucker');
+  }
+  if (match(/help/i)) {
     send('𝔉𝔘ℭ𝔎𝔈ℜ 𝔦𝔰 𝔞 𝔡𝔦𝔰𝔠𝔬𝔯𝔡 𝔟𝔬𝔱 𝔞𝔫𝔡 𝔠𝔬𝔣𝔣𝔢𝔢 𝔞𝔡𝔡𝔦𝔠𝔱.\ntype the word \'commands\' to get a list of commands.')
   }
-  if (content.match(/commands/gi)){
+  if (match(/commands/i)){
     send('Commands list:\n```about: help, commands, ping, uptime/upmin/uphour\ninfo: time {time/tim/timestamp}\nactions: coffee {sip/refill/cups/sips}, assassinate, blam, kms, asdf\nresponses: hi, sup, cool, dog, say, f, snipe\nkill the bot: die```');
   }
-
-  var jacket = 0;
-  if (content.match(/\$jacket/gi)) {
-    jacket += 1;
-    send('Indica has made ' + jacket + ' peoples\' days')
-  }
-
   // exports.run = async (client, nessage, args) => {
   //   const msg = await message.channel.send('ping');
   //   msg.edit(`pong @${msg.createdTimestamp - message.createdTimestamp}ms. api latency = ${Math.round(client.ping)}ms`);
   // };
   // if (content.match(/ping/gi) && !content.match(/pings/gi)) {
-  if (content.match(/ping/gi)) {
+  if (match(/ping/gi)) {
     send('pong @' + client.ping + 'ms');
   }
-  // if (content.match(/pings/gi)) {
-  //   send(client.pings[2]);
-  // }
-
   if (match('timestamp')) {
     send(timestamp());
   }
@@ -146,87 +137,80 @@ client.on('message', (message, err) => {
   // if (match('timelist')) {
   //   console.log(timelist());
   // }
-
-  if (content.match(/uptime/gi)) {
+  if (match(/uptime/gi)) {
     send('fucker been alive for ' + client.uptime / 1000 + ' seconds');
   }
-  if (content.match(/upmin/gi)) {
+  if (match(/upmin/gi)) {
     send('fucker been alive for ' + client.uptime / 60000 + ' minutes');
   }
-  if (content.match(/uphour/gi)) {
+  if (match(/uphour/gi)) {
     send('fucker been alive for ' + client.uptime / 3600000 + ' hours');
   }
-
-  if (content.match(/hostinfo/gi)) {
+  if (match(/hostinfo/gi)) {
     send('```hostname: ' + os.hostname() + '\ntype: ' + os.type() + '\nplatform: ' + os.platform() + '\nrelease: ' + os.release() + '\nuptime: ' + (Math.floor(os.uptime() / 60)) + ' minutes```');
   }
   // if (content.match(/whoami/gi)) {
   //   send(os.hostname());
   // }
 
-  if (content.match(/google/gi)) {
-    var query = message.content.split(' ').slice(1).join('%20');
+  if (match(/google/gi)) {
+    var query = content.split(' ').slice(1).join('%20');
     send('https://www.google.com/search?q=' + query)
   }
+  if (match(/goo/i)) {
+  }
 
-  var rand = Math.floor(Math.random())
   if (content.match(/dice/gi)) {
-    var d1 = Math.floor(Math.random() * 6 + 1);
-    var d2 = Math.floor(Math.random() * 6 + 1);
+    var d1 = rand(6) + 1;
+    var d2 = rand(6) + 1;
     send('You rolled ' + (d1 + d2) + '. (' + d1 + ' and ' + d2 + ')');
   }
+
+  if (content.match(/hash/i)) {
+    var input = content.split(' ').slice(1).join(' ');
+    send('\'' + input + '\'\nmd5 = ' + md5(input) + '\nsha256 = ' + sha256(input));
+  }
   if (content.match(/>cc/gi)) {
-    // var cc = Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' | CV: ' + Math.floor(Math.random() * 900 + 100) + ' | Expires ';
     function n() {
-      return Math.floor(Math.random() * 9000 + 1000)
+      return rand(9000) + 1000;
     }
-    var cc = n() + ' ' + n() + ' ' + n() + ' ' + n() + ' | CV: ' + Math.floor(Math.random() * 900 + 100) + ' | Expires ';
-    var m = Math.floor(Math.random() * 12 + 1);
-    var y = Math.floor(Math.random() * 4 + 2019);
+    var cc = n() + ' ' + n() + ' ' + n() + ' ' + n() + ' | CV: ' + (rand(900) + 100) + ' | Expires ';
+    var m = rand(12) + 1;
+    var y = rand(4) + 2019;
     send('`' + cc + m + '/' + y + '`');
   }
   if (content.match(/>ssn/gi)) {
-    var ssn = Math.floor(Math.random() * 900 + 100) + '-' + Math.floor(Math.random() * 90 + 10) + '-' + Math.floor(Math.random() * 9000 + 1000);
+    var ssn = rand(900) + 100 + '-' + (rand(90) + 10) + '-' + (rand(9000) + 1000);
     send(ssn);
   }
-
-  // if (content.match(/asdf/gi)) {
-  //   var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-  //   var word = '';
-  //   while (word.length < 4) {
-  //     word = word + abc[Math.floor(Math.random() * abc.length)];
-  //   }
-  //   message.channel.send(word);
-  //   // console.log('word', word)
-  // }
   if (content.match(/asdf/gi)) {
     var msg = content.match(/\d+/g);
     var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     var word = '';
-    if (!isNaN(msg)) {
-      while (word.length < msg) {
-        word = word + abc[Math.floor(Math.random() * abc.length)];
-      }
-    } else {
+    if (msg === null) {
       while (word.length < 4) {
-        word = word + abc[Math.floor(Math.random() * abc.length)];
+        word = word + abc[rand(abc.length)];
+      }
+    } else if (msg > 2000) {
+      send('max character count === 2000');
+    } else {
+      while (word.length < msg) {
+        word = word + abc[rand(abc.length)];
       }
     }
-    message.channel.send(word);
+    send(word);
   }
-
 
   if (content.match(/fucker/gi)) {
     send('```███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝```');
   }
-
-  if (content === (/hi/i) && !content === ('HI')) {
+  if (match('hi') && message.content !== 'HI') {
     send('hi');
   }
-  if (content.match('HI')) {
+  if (match('HI')) {
     send('HI');
   }
-  if (content.match(/sup/i)) {
+  if (match(/sup/i)) {
     send('not much supwitchu');
   }
   if (content.match(/cool/gi)) {
@@ -238,34 +222,38 @@ client.on('message', (message, err) => {
   if (content === 'iic') {
     var c = 'cool ';
     var msg = '';
-    msg = msg + c.repeat(Math.floor(Math.random() * 20 + 1))
+    msg = msg + c.repeat(rand(390) + 1);
     send(':sparkles: indica is ' + msg + ':sparkles:');
   }
-  if (message.content === 'f') {
+  var jacket = 0;
+  if (content.match(/\$jacket/gi)) {
+    jacket += 1;
+    send('Indica has made ' + jacket + ' peoples\' days')
+  }
+  if (content === 'f') {
     send('uck');
   }
-  if (message.content.match(/say/i)) {
-    send(message.content);
+  if (content.match(/say/i)) {
+    send(content);
   }
   if (content.match(/assassinate/i)) {
-    var input = message.content.split(' ').slice(1).join(' ');
-    send(input + ' has been killed.');
+    if (content.split(' ').indexOf('assassinate') === 0) {
+      var input = content.split(' ').slice(1).join(' ');
+      send(input + ' has been killed.');
+    }
   }
   if (content.match(/blam/i)) {
-    var input = message.content.split(' ').slice(1).join(' ');
-    send(input + ' got their shit ROCKED.');
+    if (content.split(' ').indexOf('blam') === 0) {
+      var input = content.split(' ').slice(1).join(' ');
+      send(input + ' got their shit ROCKED.');
+    }
   }
   if (content.match(/kms/gi)) {
     send(message.author + ' has died.');
   }
   if (content.match(/snipe/gi)) {
-    // var input = message.content.split(' ').slice(1).join(' ');
     send('(　-_･) ︻デ═一 ▸');
   }
-
-  // if (content.match(/kiss/gi)) {
-  //   send(':shamaDab: ' + message.content + ' :shamaKiss:');
-  // }
   if (content.match(/perry/gi)) {
     send('https://soundcloud.com/shamanabeats/percocet-perry')
   }
@@ -276,10 +264,7 @@ client.on('message', (message, err) => {
     send('https://soundcloud.com/shamanabeats/sets/god-and-i-worked-things-out')
   }
 
-  // #####################################################################################################
-  // coffee commands
-  // if (message.content.toLowerCase() === 'coffee') {
-  if (message.content.match(/coffee/i)) {
+  if (content.match(/coffee/i)) {
     send('Hi! Would you like a cup of coffee? [sip, refill, cups, sips]')
   }
   if (content.match(/sip/i) && !content.match(/sips/i)) {
@@ -295,15 +280,16 @@ client.on('message', (message, err) => {
     sips(channel);
   }
 
-
-  if (message.content.toLowerCase() === 'die') {
-    console.log(":\'(");
-    setTimeout(function(){
-      console.log("test");
-    }, 2000);
-    if (true) {
-      death.insert('death');
+  if (content.toLowerCase() === 'die') {
+    send('ouch');
+    console.log('deaded');
+    function die() {
+      console.log("\n:\'(\n");
+      if (true) {
+        life.insert('kill');
+      }
     }
+    setTimeout(die, 300)
   }
   if (message.content.toLowerCase() === 'reboot') {
     console.log('rebooting...');
@@ -318,20 +304,40 @@ client.on('message', (message, err) => {
   //     .catch(console.error);
   // }
 });
-
 // stolen
 client.on('message', async message => {
   if (message.content === "ping") {
     const m = await message.channel.send("Ping?");
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
-  if (message.content.match(/boo/gi)) {
-    const m = await message.channel.send("aaaaaaa!!! a ghost!!");
-    m.delete(300);
+  if (message.content.match(/boo/i)) {
+    // var arg = message.content.split('');
+    function word() {
+      return message.content.toLowerCase().split(' ').slice(0);
+    }
+    console.log(word());
+    function letters() {
+      return word().split('').slice(0, 3).join('');
+    }
+    console.log(letters());
+    if (letters() === 'boo') {
+    // if (message.content.match(/boo/i)) {
+      var arg = message.content.split('').slice(3);
+      console.log(arg);
+      message.delete(250);
+      const m = await message.channel.send("aaaaaaa!!! a ghost!!");
+      m.delete(500);
+    }
+  }
+  if (message.content.match(/test/gi)) {
+    message.delete(100);
+    for (i=1;i<11;i++) {
+      const m = await message.channel.send(i);
+      m.delete(10);
+    }
   }
 });
 
 client.on("messageDelete", (messageDelete) => {
-  // messageDelete.channel.send(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} was deleted.`)
   console.log(chalk.bgRed(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} was deleted.`));
 });
