@@ -21,65 +21,49 @@ client.on('ready', () => {
   console.log(chalk.magenta.bgCyan('\n    A C T I V A T E D    \n') + chalk.cyan.bgMagenta(`Logged in as ${client.user.tag} \n`));
   console.log(chalk.cyan('███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝'));
   console.log(chalk.inverse(`\nThere are ${client.users.size} users in ${client.channels.size} channels of ${client.guilds.size} guilds.\n`));
-
-  // morning coffee sips
+  console.log(chalk.black.bgYellow('currently running on host ' + os.hostname()));
   client.channels.get(private.gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
+  // morning coffee sips
   if (coffee.pot === 0) {
     refill(client.channels.get(private.gamb))
   }
   sip(client.channels.get(private.gamb));
   client.channels.get(private.gamb).send('good bean juice taste like chocolate make me go fast');
-  console.log('currently running on host ' + os.hostname());
 });
 
-// error handling????? does this work???
 client.on('error', console.error);
 // client.on('error', error => {
 //   console.log('ERROR:', error);
 // });
-
 client.on('typingStart', (channel, user) => {
   console.log(timestamp() + chalk.magenta(` ${user.tag}`) + ` started to type at ` + chalk.cyan(`${channel.name}`));
 });
 client.on('typingStop', (channel, user) => {
   console.log(timestamp() + chalk.magenta(` ${user.tag}`) + ` stopped typing at ` + chalk.cyan(`${channel.name}`));
 });
-
-var reminder = schedule.scheduleJob('0 * * * *', function(){
-  client.channels.get(private.gamb).send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
-});
-var weedpm = schedule.scheduleJob('20 16 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-var wausam = schedule.scheduleJob('20 4 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-var wauspm = schedule.scheduleJob('20 9 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-var weedam = schedule.scheduleJob('20 20 * * *', function(){
-  client.channels.get(private.gamb).send('420 BLAZE IT')
-});
-
+// var reminder = schedule.scheduleJob('0 * * * *', function(){
+//   client.channels.get(private.gamb).send('```┍━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┑\n\n    hourly reminder!!!!! drink fucking water!!!!!\n\n┕━━━━━━━━━━━━━━━━━━━━━━━━━✿━━━━━━━━━━━━━━━━━━━━━━━━━┙```')
+// });
+// var weedpm = schedule.scheduleJob('20 16 * * *', function(){
+//   client.channels.get(private.gamb).send('420 BLAZE IT')
+// });
+// var wausam = schedule.scheduleJob('20 4 * * *', function(){
+//   client.channels.get(private.gamb).send('420 BLAZE IT')
+// });
+// var wauspm = schedule.scheduleJob('20 9 * * *', function(){
+//   client.channels.get(private.gamb).send('420 BLAZE IT')
+// });
+// var weedam = schedule.scheduleJob('20 20 * * *', function(){
+//   client.channels.get(private.gamb).send('420 BLAZE IT')
+// });
 let useRegEx = false;
-
 client.on('message', (message, err) => {
   if (message.author.bot) return;
   if (err) message.channel.send(err);
-  // fix this
-
-  // condense necessary parameters
-  // is this working 100%?
   const { channel, content } = message;
-  // condense necessary parameters pt. 2
   const send = string => {
     message.channel.send(string);
   }
-
-
-  // if (message.content.indexOf(config.prefix) !== 0) return;
-  // change to private.prefix, also set prefix
-
   // const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   // const command = args.shift().toLowerCase();
 
@@ -96,11 +80,23 @@ client.on('message', (message, err) => {
       // console.log(message.content.toLowerCase() + '===' + arg)
     }
   }
+
   if (match('toggle')) {
     useRegEx = !useRegEx;
     console.log('useRegEx', useRegEx);
     send('useRegEx', useRegEx);
   }
+
+  var values = ;
+  if (match('values')) {
+    send(values)
+  }
+
+
+
+
+
+
 
 
   if (content.match(/help/gi)) {
@@ -110,16 +106,6 @@ client.on('message', (message, err) => {
     send('Commands list:\n```about: help, commands, ping, uptime/upmin/uphour\ninfo: time {time/tim/timestamp}\nactions: coffee {sip/refill/cups/sips}, assassinate, blam, kms, asdf\nresponses: hi, sup, cool, dog, say, f, snipe\nkill the bot: die```');
   }
 
-
-  if (message.content === 'BOO') {
-    message.delete(300).catch(fuck=>{});
-    send('aaaaa!!!!!! a ghost!!!!');
-    // try {
-    //   let result = await dosomething()
-    // } catch(e) {
-    //   console.log('err', err)
-    // }
-  }
 
 
 
@@ -143,6 +129,32 @@ client.on('message', (message, err) => {
   // if (content.match(/pings/gi)) {
   //   send(client.pings[2]);
   // }
+
+
+
+
+  if (content.match(/countdown/gi)) {
+    console.log("countdown initiated.")
+    var c = 4;
+    setInterval(function () {
+      if (c !== -1) {
+        c = c - 1;
+        console.log(c)
+        send(c);
+        if (c == 0) {
+          console.log("Timer Done!");
+          send('GO')
+          return;
+        }
+      }
+    }, 1000)
+  }
+
+
+
+
+
+
 
   if (match('timestamp')) {
     send(timestamp());
@@ -294,6 +306,17 @@ client.on('message', (message, err) => {
   }
   if (content.match(/sips/gi)) {
     sips(channel);
+  }
+
+
+  if (message.content === 'BOO') {
+    message.delete(300).catch(fuck=>{});
+    send('aaaaa!!!!!! a ghost!!!!');
+    // try {
+    //   let result = await dosomething()
+    // } catch(e) {
+    //   console.log('err', err)
+    // }
   }
 
 

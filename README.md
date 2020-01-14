@@ -1,8 +1,8 @@
 # fucker
-a discord bot. made with javascript and discord.js, plus bonus packages.
+a discord bot.
 
-fucker is a ping statistics bot and coffee addict. he listens to people type and
-sometimes you can kill him.
+a ping statistics bot and coffee addict. it listens to people type and
+you can make it die.
 
 i need to clean it tf up also.
 
@@ -11,19 +11,25 @@ i need to clean it tf up also.
 no prefix currently, 'help' for command list
 
 current commands (for personal reference):
-toggle
-help
-commands
-jacket
+
+toggle/values
+help/commands
+
+coffee/sip/refill/cups/sips
 ping
+countdown
+
 timestamp/time/tim/tyme/tym
 uptime/upmin/uphour
 hostinfo
+
 google
+
 dice
-cc
-ssn
-asdf
+jacket
+
+cc/ssn/asdf
+
 fucker
 hi/HI
 sup
@@ -32,9 +38,8 @@ dog
 iic
 f
 say
-assassinate/blam/kms
-snipe
+assassinate/blam/kms/snipe
 perry/wris/god
-coffee/sip/refill/cups/sips
-die/reboot
 boo
+
+die/reboot
