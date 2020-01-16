@@ -23,13 +23,13 @@ timestamp/time/tim/tyme/tym
 uptime/upmin/uphour
 hostinfo
 
-google
-
 dice
 jacket
 
+google
 cc/ssn/asdf
 
+;;;;;;;;;;;;;annoying
 fucker
 hi/HI
 sup

@@ -66,7 +66,7 @@ var lifetest = schedule.scheduleJob('* * * * * *', function(){
 // var weedam = schedule.scheduleJob('20 20 * * *', function(){
 //   client.channels.get(private.gamb).send('420 BLAZE IT')
 // });
-let useRegEx = true;
+let useRegEx = false;
 client.on('message', (message, err) => {
   if (message.author.bot) return;
   if (err) message.channel.send(err);
@@ -90,71 +90,40 @@ client.on('message', (message, err) => {
       // console.log(message.content.toLowerCase() + '===' + arg)
     }
   }
-// ################################################################
-// ################################################################
-//                         match('example')
-//                               vs
-//                         match(/example/)
-// ################################################################
-// ################################################################
+
   if (match('toggle')) {
     useRegEx = !useRegEx;
     console.log('useRegEx', useRegEx);
-    send('useRegEx = ' + useRegEx + '\n*(true = `match(arg)`, false = `toLowerCase() === arg`)*', useRegEx);
+    send('useRegEx', useRegEx);
   }
+
   if (match('values')) {
-    send('`useRegEx = ' + useRegEx + '`');
+    send('useRegEx = ' + useRegEx);
   }
 
-  if (match(/hmu/i)) {
-    message.author.send('psst..... psssssst.......... hi');
+  if (match(/help/gi)) {
+    send('𝔉𝔘ℭ𝔎𝔈ℜ 𝔦𝔰 𝔞 𝔡𝔦𝔰𝔠𝔬𝔯𝔡 𝔟𝔬𝔱 𝔞𝔫𝔡 𝔠 𝔬 𝔣 𝔣 𝔢 𝔢   𝔞 𝔡 𝔡 𝔦 𝔠 𝔱.\ntype the word \'commands\' to get a list of commands.')
+  }
+  if (match(/commands/gi)){
+    send('Commands list:\n```about: help, commands, ping, uptime/upmin/uphour\ninfo: time {time/tim/timestamp}\nactions: coffee {sip/refill/cups/sips}, assassinate, blam, kms, asdf\nresponses: hi, sup, cool, dog, say, f, snipe\nkill the bot: die```');
   }
 
-  if (match(/help/i)) {
-    send('𝔉𝔘ℭ𝔎𝔈ℜ 𝔦𝔰 𝔞 𝔡𝔦𝔰𝔠𝔬𝔯𝔡 𝔟𝔬𝔱 𝔞𝔫𝔡 𝔠 𝔬 𝔣 𝔣 𝔢 𝔢   𝔞 𝔡 𝔡 𝔦 𝔠 𝔱.\ntype \'commands\' to get a list of commands.')
+  // #####################################################################################################
+  // coffee commands
+  // if (message.content.toLowerCase() === 'coffee') {
+  if (match(/coffee/gi)) {
+    send('Hi! Would you like a cup of coffee? [sip, refill, cups, sips]')
   }
-  if (match(/commands/i)){
-    send('Commands list:\n```\nhelp\ncommands\nping\nuptime upmin uphour\ntime tim timestamp\n\ncoffee sip refill cups sips\n\nassassinate blam kms snipe\n\nhi cool sup dog f say\n\nasdf\nBOO\ndie\nreboot```');
+  if (match(/sip/gi) && !match(/sips/gi)) {
+    sip(channel)
   }
-
-  if (match(/slots/i)) {
-    console.log("command called");
-    var faces = [":cowboy:", ":sparkles:", ":moneybag:", ":gem:", ":coffee:", ":zzz:", ":cool:"];
-    // var faces = [":cowboy:", ":sparkles:", ":moneybag:"];
-    var array = new Array(9);
-    function spin() {
-      for (i = 0; i < array.length; i++) {
-        var result = Math.floor(Math.random() * faces.length);
-        array[i] = faces[result];
-      }
-      console.log("array => ", array);
-      // array[3] = array[4] = array[5] = faces[0];
-      if (array[3] === array[4] && array[4] === array[5]) {
-        send("you spin the wheel! and...\n" + array[0] + " | " + array[1] + " | " + array[2] + "\n" + array[3] + " | " + array[4] + " | " + array[5] + "\n" + array[6] + " | " + array[7] + " | " + array[8] + "\nyou win!!!!!!!!!!!!! congrats");
-        // send("you win!!!!!!!!!!!!!!!");
-      } else {
-        send("you spin the wheel! and...\n" + array[0] + " | " + array[1] + " | " + array[2] + "\n" + array[3] + " | " + array[4] + " | " + array[5] + "\n" + array[6] + " | " + array[7] + " | " + array[8] + "\nyou lose :skull: :skull: :skull:");
-        // send("you lose :skull: :skull: :skull:")
-      }
-      // send("you spin the wheel! and...\n" + array[0] + " | " + array[1] + " | " + array[2] + "\n" + array[3] + " | " + array[4] + " | " + array[5] + "\n" + array[6] + " | " + array[7] + " | " + array[8] + "\ncongrats");
-    }
-    spin();
-  }
-
-
-  if (match(/coffee/i)) {
-    send('Hi! Would you like a cup of coffee? [sip, refill, cups, sips]');
-  }
-  if (match(/sip/i) && !match(/sips/i)) {
-    sip(channel);
-  }
-  if (match(/refill/i)) {
+  if (match(/refill/gi)) {
     refill(channel);
   }
-  if (match(/cups/i)) {
+  if (match(/cups/gi)) {
     cups(channel);
   }
-  if (match(/sips/i)) {
+  if (match(/sips/gi)) {
     sips(channel);
   }
 
@@ -163,17 +132,19 @@ client.on('message', (message, err) => {
   //   msg.edit(`pong @${msg.createdTimestamp - message.createdTimestamp}ms. api latency = ${Math.round(client.ping)}ms`);
   // };
   // if (content.match(/ping/gi) && !content.match(/pings/gi)) {
-  if (match(/ping/i)) {
+  if (match(/ping/gi)) {
     send('pong @' + client.ping + 'ms');
   }
-  // if (content.match(/pings/i)) {
+  // if (content.match(/pings/gi)) {
   //   send(client.pings[2]);
   // }
-  if (match(/ready/i)) {
+
+  if (match(/ready/gi)) {
     send(message.author + "** IS READY**");
   }
-  if (match(/countdown/i)) {
-    console.log("countdown initiated.");
+
+  if (match(/countdown/gi)) {
+    console.log("countdown initiated.")
     var c = 3;
     function countdown() {
       if (c !== 0) {
@@ -195,19 +166,13 @@ client.on('message', (message, err) => {
     send(timestamp());
   }
   if (match('time')) {
-    // if (message.author.id === 321538982666305538) {
-    //   send(time());
-    // }
-    // if (message.author.id === 247568161686159360) {
-    //   send(tyme());
-    // }
     send(time());
-  }
-  if (match('tyme')) {
-    send(tyme());
   }
   if (match('tim')) {
     send(tim());
+  }
+  if (match('tyme')) {
+    send(tyme());
   }
   if (match('tym')) {
     send(tym());
@@ -216,49 +181,55 @@ client.on('message', (message, err) => {
   //   console.log(timelist());
   // }
 
-  if (match(/uptime/i)) {
+  if (match(/uptime/gi)) {
     send('fucker been alive for ' + client.uptime / 1000 + ' seconds');
   }
-  if (match(/upmin/i)) {
+  if (match(/upmin/gi)) {
     send('fucker been alive for ' + client.uptime / 60000 + ' minutes');
   }
-  if (match(/uphour/i)) {
+  if (match(/uphour/gi)) {
     send('fucker been alive for ' + client.uptime / 3600000 + ' hours');
   }
-  if (match(/lifetime/i)) {
+  if (match(/lifetime/gi)) {
     send('MY WHOLE LIFE IS ONLY ' + life.time / 1000 + ' SECONDS LONG');
   }
 
-  if (match(/hostinfo/i)) {
+  if (match(/hostinfo/gi)) {
     send('```hostname: ' + os.hostname() + '\ntype: ' + os.type() + '\nplatform: ' + os.platform() + '\nrelease: ' + os.release() + '\nuptime: ' + (Math.floor(os.uptime() / 60)) + ' minutes```');
   }
-  // if (content.match(/whoami/i)) {
+  // if (content.match(/whoami/gi)) {
   //   send(os.hostname());
   // }
 
   var rand = Math.floor(Math.random())
 
-  if (match(/dice/i)) {
+  if (match(/dice/gi)) {
     var d1 = Math.floor(Math.random() * 6 + 1);
     var d2 = Math.floor(Math.random() * 6 + 1);
     send('You rolled ' + (d1 + d2) + '. (' + d1 + ' and ' + d2 + ')');
   }
 
   var jacket = 0;
-  if (match(/\$jacket/i)) {
+  if (match(/\$jacket/gi)) {
     jacket += 1;
     send('Indica has made ' + jacket + ' peoples\' days')
   }
 
-  if (match(/google/i)) {
+
+
+
+
+  if (match(/google/gi)) {
     var query = message.content.split(' ').slice(1).join('%20');
     send('https://www.google.com/search?q=' + query)
   }
-  if (match(/>ssn/i)) {
+
+  if (match(/>ssn/gi)) {
     var ssn = Math.floor(Math.random() * 900 + 100) + '-' + Math.floor(Math.random() * 90 + 10) + '-' + Math.floor(Math.random() * 9000 + 1000);
     send(ssn);
   }
-  if (match(/>cc/i)) {
+
+  if (match(/>cc/gi)) {
     // var cc = Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' ' + Math.floor(Math.random() * 9000 + 1000) + ' | CV: ' + Math.floor(Math.random() * 900 + 100) + ' | Expires ';
     function n() {
       return Math.floor(Math.random() * 9000 + 1000)
@@ -268,7 +239,8 @@ client.on('message', (message, err) => {
     var y = Math.floor(Math.random() * 4 + 2019);
     send('`' + cc + m + '/' + y + '`');
   }
-  if (match(/asdf/i)) {
+
+  if (match(/asdf/gi)) {
     var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     var word = '';
     while (word.length < 4) {
@@ -278,16 +250,19 @@ client.on('message', (message, err) => {
     // console.log('word', word)
   }
 
-  if (match(/fucker/i)) {
+
+
+  if (match(/fucker/gi)) {
     send('```███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝```');
   }
-  if (match(/hi/i) && !match(/HI/)) {
+
+  if (match(/hi/gi) && !match(/HI/g)) {
     send('hi');
   }
-  if (match(/HI/)) {
+  if (match(/HI/g)) {
     send('HI');
   }
-  if (match(/sup/i)) {
+  if (match(/sup/gi)) {
     send('not much supwitchu');
   }
   if (match(/cool/gi)) {
@@ -304,14 +279,14 @@ client.on('message', (message, err) => {
   if (message.content === 'f') {
     send('uck');
   }
-  if (match(/say/i)) {
+  if (message.match(/say/gi)) {
     send(message.content);
   }
-  if (match(/assassinate/i)) {
+  if (match(/assassinate/gi)) {
     var input = message.content.split(' ').slice(1).join(' ');
     send(input + ' has been killed.');
   }
-  if (match(/blam/i)) {
+  if (match(/blam/gi)) {
     var input = message.content.split(' ').slice(1).join(' ');
     send(input + ' got their shit ROCKED.');
   }
@@ -321,6 +296,19 @@ client.on('message', (message, err) => {
   if (match(/snipe/gi)) {
     // var input = message.content.split(' ').slice(1).join(' ');
     send('(　-_･) ︻デ═一 ▸');
+  }
+
+  // if (content.match(/kiss/gi)) {
+  //   send(':shamaDab: ' + message.content + ' :shamaKiss:');
+  // }
+  if (match(/perry/gi)) {
+    send('https://soundcloud.com/shamanabeats/percocet-perry')
+  }
+  if (match(/wris/gi)) {
+    send('https://soundcloud.com/shamanabeats/lookama-wris')
+  }
+  if (match(/god/gi)) {
+    send('https://soundcloud.com/shamanabeats/sets/god-and-i-worked-things-out')
   }
 
   if (message.content === 'BOO') {
@@ -333,28 +321,14 @@ client.on('message', (message, err) => {
     // }
   }
 
-  if (match(/die/gi)) {
-    console.log(":'(");
-    var d = 1;
-    function death() {
-      if (d !== 0) {
-        console.log(d);
-        console.log("goodbye cruel world...");
-        send(":skull: ack! bleh.....");
-        d = d - 1;
-      } else {
-        if (d === 0) {
-          console.log("murked");
-          send('ded');
-          clearInterval(dying);
-          if (true) {
-            murder.insert(ded);
-          }
-          return;
-        }
-      }
+  if (message.content.toLowerCase() === 'die') {
+    console.log(":\'(");
+    setTimeout(function(){
+      console.log("test");
+    }, 2000);
+    if (true) {
+      death.insert('death');
     }
-    var dying = setInterval(death, 1000);
   }
   if (message.content.toLowerCase() === 'reboot') {
     console.log('rebooting...');
@@ -362,7 +336,6 @@ client.on('message', (message, err) => {
     .then(msg => client.destroy())
     .then(() => client.login(private.token));
   }
-
 });
 
 client.on("messageDelete", (messageDelete) => {
