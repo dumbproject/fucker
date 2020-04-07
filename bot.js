@@ -8,26 +8,31 @@ const chalk = require('chalk');
 const { refill, sip, cups, sips } = require('./commands/coffee.js');
 const { timestamp, time, tim, tyme, tym } = require ('./commands/time.js');
 
+// users: 321538982666305538 = stuck
+//        247568161686159360 = indicat
+
+// channels:
+//
+
 const fs = require('fs');
 let coffee = JSON.parse(fs.readFileSync("./commands/coffee.json", "utf8"));
 // console.log('coffee', coffee);
-const write2File = () => fs.writeFile("./commands/coffee.json", JSON.stringify(coffee), (err) =>{
+const writeToFile = () => fs.writeFile("./commands/coffee.json", JSON.stringify(coffee), (err) =>{
   if (err) console.error(err)
 });
 
 let life = JSON.parse(fs.readFileSync("./life.json", "utf8"));
-const writeToFile = () => fs.writeFile("./life.json", JSON.stringify(life), (err) =>{
+const write2File = () => fs.writeFile("./life.json", JSON.stringify(life), (err) =>{
   if (err) console.error(err)
 });
-
 
 client.login(private.token)
 client.on('ready', () => {
   client.user.setActivity('the drums');
-  console.log(chalk.magenta.bgCyan('\n    A C T I V A T E D    \n') + chalk.cyan.bgMagenta(`Logged in as ${client.user.tag} \n`));
+  console.log(chalk.magenta.bgCyan('\n                         \n    A C T I V A T E D    \n                         \n') + chalk.cyan.bgMagenta(`                         \nLogged in as: ${client.user.tag}\n                         \n`));
   console.log(chalk.cyan('███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝'));
-  console.log(chalk.inverse(`\nThere are ${client.users.size} users in ${client.channels.size} channels of ${client.guilds.size} guilds.\n`));
-  console.log(chalk.black.bgYellow('currently running on host ' + os.hostname()));
+  console.log(chalk.black.white.bgBlue(`\nThere are ${client.users.size} users in ${client.channels.size} channels of ${client.guilds.size} guilds.`));
+  console.log(chalk.black.bgYellow('currently running on host ' + os.hostname() + '\n\n'));
   // morning coffee sips
   // client.channels.get(private.gamb).send('yes henlo good monring i am bot. bouta take a FAT SIP of coffe');
   // if (coffee.pot === 0) {
@@ -41,13 +46,16 @@ client.on('error', console.error);
 // client.on('error', error => {
 //   console.log('ERROR:', error);
 // });
+// ██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+// ██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
 client.on('typingStart', (channel, user) => {
-  console.log(timestamp() + chalk.magenta(` ${user.tag}`) + ` started to type at ` + chalk.cyan(`${channel.name}`));
+  console.log(timestamp() + chalk.magenta(` ${user.tag}:`) + ` started typing at ` + chalk.cyan(`${channel.name}`));
 });
 client.on('typingStop', (channel, user) => {
-  console.log(timestamp() + chalk.magenta(` ${user.tag}`) + ` stopped typing at ` + chalk.cyan(`${channel.name}`));
+  console.log(timestamp() + chalk.magenta(` ${user.tag}:`) + ` stopped typing at ` + chalk.cyan(`${channel.name}`));
 });
-
+// ██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+// ██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
 var lifetest = schedule.scheduleJob('* * * * * *', function(){
   life.time += client.uptime;
 });
@@ -67,12 +75,20 @@ var lifetest = schedule.scheduleJob('* * * * * *', function(){
 //   client.channels.get(private.gamb).send('420 BLAZE IT')
 // });
 let useRegEx = true;
+
 client.on('message', (message, err) => {
-  if (message.author.bot) return;
+  if (message.author.bot) {
+    console.log(chalk.black.bgWhite(timestamp() + ' ' + message.author.tag + ": " + message.content));
+    return;
+  }
   if (err) message.channel.send(err);
   const { channel, content } = message;
   const send = string => {
     message.channel.send(string);
+  }
+
+  if (message.content) {
+    console.log(chalk.inverse(timestamp() + ' ' + message.author.tag + ": " + message.content));
   }
   // const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   // const command = args.shift().toLowerCase();
@@ -106,6 +122,111 @@ client.on('message', (message, err) => {
     send('`useRegEx = ' + useRegEx + '`');
   }
 
+
+  var lines = []
+  var sequence = []
+  function coinToss() {
+    var value = 0
+    var side = ''
+    for(var i = 0; i < 3; i++) {
+      if (Math.random() > 0.5) {
+        value += 3
+        side += ' tails'
+      } else {
+        value += 2
+        side += ' heads'
+      }
+      console.log('value=' + value + '\nside=' + side)
+    }
+    var results = ''
+    results = '  ' + side + '   ' + value.toString()
+    if (value % 2 === 0) {
+      lines.push(results + '   -------   -------')
+      sequence.push(0)
+    } else {
+      lines.push(results + '   -----------------')
+      sequence.push(1)
+    }
+    console.log('sequence=' + sequence)
+  }
+  function createHex() {
+    for (var i = 0; i < 6; i++) {
+      coinToss()
+    }
+    lines.reverse()
+    for (var i = 0; i < 6; i++) {
+      console.log('\n')
+      console.log(lines[i])
+      console.log('\n')
+    }
+    send('\n```' + lines[0] + '\n' + lines[1] + '\n' + lines[2] + '\n' + lines[3] + '\n' + lines[4] + '\n' + lines[5] + '```')
+  }
+  if (match(/iching/i)) {
+    createHex()
+  }
+
+
+
+
+
+  if (match('ily')) {
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    client.channels.get("682353941425815621").send('UR CUTE');
+    client.channels.get("682353941425815621").send('I\'M IN LOVE WITH YOU');
+    // for (d = 0; d < 999999999; d++) {
+    //   client.channels.get("682353941425815621").send('UR CUTE');
+    // };
+  }
+
+
+
   if (match(/hmu/i)) {
     message.author.send('psst..... psssssst.......... hi');
   }
@@ -117,30 +238,103 @@ client.on('message', (message, err) => {
     send('Commands list:\n```\nhelp\ncommands\nping\nuptime upmin uphour\ntime tim timestamp\n\ncoffee sip refill cups sips\n\nassassinate blam kms snipe\n\nhi cool sup dog f say\n\nasdf\nBOO\ndie\nreboot```');
   }
 
+  if (match(/tiny/i)) {
+    var tiny = "ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᵠʳˢᵗᵘᵛʷˣʸᶻ"
+    var normal = "abcdefghijklmnopqrstuvwxyz"
+    var newmessage = message.content.toLowerCase().split(' ').slice(1).join(' ');
+    var final = newmessage;
+    for (i = 0; i < newmessage.length; i++) {
+    // for every character in the message
+      for (l = 0; l < 26; l++) {
+      // for every letter in the alphabet
+        if (newmessage.charAt(i) === normal.charAt(l)) {
+          var firsthalf = final.substr(0, i);
+          var lasthalf = final.substr(i + 1);
+          final = firsthalf + tiny[l] + lasthalf;
+          console.log("newmessage: " + final);
+          l = 26;
+        // } else {
+        //   send("error");
+        //   console.log(newmessage[i], normal[l]);
+        }
+      }
+    }
+    send(final);
+  }
+
+  // if (match(/slots/i)) {
+  //   console.log(chalk.black.bgMagenta(message.author + " is gambling. wish them luck..."));
+  //   var faces = [":cowboy:", ":sparkles:", ":moneybag:", ":gem:", ":coffee:", ":zzz:", ":cool:"];
+  //   // var faces = [":cowboy:", ":sparkles:", ":moneybag:"];
+  //   var array = new Array(9);
+  //   function spin() {
+  //     for (i = 0; i < array.length; i++) {
+  //       var result = Math.floor(Math.random() * faces.length);
+  //       array[i] = faces[result];
+  //     }
+  //     // console.log("array => ", array);
+  //     if (array[3] === array[4] && array[4] === array[5]) {
+  //       send("you pull the lever! and...\n|" + array[0] + "|" + array[1] + "|" + array[2] + "|\n|" + array[3] + "|" + array[4] + "|" + array[5] + "|\n|" + array[6] + "|" + array[7] + "|" + array[8] + "|\n\nyou win!!!!!!!!!!!!! congrats");
+  //     } else {
+  //       send("you pull the lever! and...\n|" + array[0] + "|" + array[1] + "|" + array[2] + "|\n|" + array[3] + "|" + array[4] + "|" + array[5] + "|\n|" + array[6] + "|" + array[7] + "|" + array[8] + "|\n\nyou lose :skull: :skull: :skull:");
+  //     }
+  //   }
+  //   spin();
+  // }
+
   if (match(/slots/i)) {
-    console.log("command called");
-    var faces = [":cowboy:", ":sparkles:", ":moneybag:", ":gem:", ":coffee:", ":zzz:", ":cool:"];
-    // var faces = [":cowboy:", ":sparkles:", ":moneybag:"];
+    var wins = 3;
+    console.log(chalk.gray(message.author.tag + " is gambling. wish them luck..."));
+    // var faces = [":cowboy:", ":sparkles:", ":gem:", ":coffee:", ":zzz:", ":cool:"];
+    var faces = [":sparkles:", ":coffee:"];
     var array = new Array(9);
     function spin() {
       for (i = 0; i < array.length; i++) {
         var result = Math.floor(Math.random() * faces.length);
         array[i] = faces[result];
       }
-      console.log("array => ", array);
-      // array[3] = array[4] = array[5] = faces[0];
       if (array[3] === array[4] && array[4] === array[5]) {
-        send("you spin the wheel! and...\n" + array[0] + " | " + array[1] + " | " + array[2] + "\n" + array[3] + " | " + array[4] + " | " + array[5] + "\n" + array[6] + " | " + array[7] + " | " + array[8] + "\nyou win!!!!!!!!!!!!! congrats");
-        // send("you win!!!!!!!!!!!!!!!");
+        wins = wins + 1;
+        send("win count: " + wins + "\nyou pull the lever! and...\n|" + array[0] + "|" + array[1] + "|" + array[2] + "|\n|" + array[3] + "|" + array[4] + "|" + array[5] + "| <---\n|" + array[6] + "|" + array[7] + "|" + array[8] + "|\n\n:sparkles: :sparkles: :sparkles:\nyou win!!!!!!!!!!!!! congrats");
       } else {
-        send("you spin the wheel! and...\n" + array[0] + " | " + array[1] + " | " + array[2] + "\n" + array[3] + " | " + array[4] + " | " + array[5] + "\n" + array[6] + " | " + array[7] + " | " + array[8] + "\nyou lose :skull: :skull: :skull:");
-        // send("you lose :skull: :skull: :skull:")
+        send("win count: " + wins + "\nyou pull the lever! and...\n|" + array[0] + "|" + array[1] + "|" + array[2] + "|\n|" + array[3] + "|" + array[4] + "|" + array[5] + "| <---\n|" + array[6] + "|" + array[7] + "|" + array[8] + "|\n\n:skull: :skull: :skull:\nyou lose");
       }
-      // send("you spin the wheel! and...\n" + array[0] + " | " + array[1] + " | " + array[2] + "\n" + array[3] + " | " + array[4] + " | " + array[5] + "\n" + array[6] + " | " + array[7] + " | " + array[8] + "\ncongrats");
     }
-    spin();
+    if (message.content !== 'slots') {
+      for (z = 0; z < message.content.split(' ').slice(1); z++) {
+        spin();
+      }
+    } else {
+      spin();
+    }
   }
 
+  // if (match(/puff/i)) {
+  //   function
+  // }
+  if (match(/puffbar/i)) {
+    send("p");
+    send("u");
+    send("f");
+    send("f");
+    send("!");
+    send("b");
+    send("a");
+    send("r");
+    send("!");
+    send("!");
+  }
+
+
+
+  if (match(/loading/i)) {
+    function dots() {
+      var sml = "o"
+        , lrg = "O";
+
+    }
+    var bar = setInterval(dots, 500)
+  }
 
   if (match(/coffee/i)) {
     send('Hi! Would you like a cup of coffee? [sip, refill, cups, sips]');
@@ -281,12 +475,12 @@ client.on('message', (message, err) => {
   if (match(/fucker/i)) {
     send('```███████╗██╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ \n██╔════╝██║   ██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗\n█████╗  ██║   ██║██║     █████╔╝ █████╗  ██████╔╝\n██╔══╝  ██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗\n██║     ╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║\n╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝```');
   }
-  if (match(/hi/i) && !match(/HI/)) {
-    send('hi');
-  }
-  if (match(/HI/)) {
-    send('HI');
-  }
+  // if (match(/hi/i) && !match(/HI/)) {
+  //   send('hi');
+  // }
+  // if (match(/HI/)) {
+  //   send('HI');
+  // }
   if (match(/sup/i)) {
     send('not much supwitchu');
   }
@@ -334,28 +528,50 @@ client.on('message', (message, err) => {
   }
 
   if (match(/die/gi)) {
-    console.log(":'(");
+    // console.log("\n:'(\n");
     var d = 1;
-    function death() {
-      if (d !== 0) {
-        console.log(d);
-        console.log("goodbye cruel world...");
-        send(":skull: ack! bleh.....");
-        d = d - 1;
-      } else {
-        if (d === 0) {
-          console.log("murked");
-          send('ded');
-          clearInterval(dying);
-          if (true) {
-            murder.insert(ded);
+    if (match(/quietly/gi)) {
+      function death() {
+        if (d !== 0) {
+          send(":skull:");
+          console.log(chalk.black.bgRed("goodbye cruel world...\n\nuptime: " + client.uptime / 1000 + " seconds\nlifetime: " + life.time / 1000 + " seconds"));
+          life.time += client.uptime;
+          d = d - 1;
+        } else {
+          if (d === 0) {
+            console.log("\n       m u r k e d\n");
+            send('ded');
+            clearInterval(dying);
+            if (true) {
+              murder.insert(ded);
+            }
+            return;
           }
-          return;
+        }
+      }
+    } else {
+      function death() {
+        if (d !== 0) {
+          send(":skull: ack! bleh.....\n```goodbye cruel world...\n\nuptime: " + client.uptime / 1000 + " seconds\nlifetime: " + life.time / 1000 + " seconds```");
+          console.log(chalk.black.bgRed("goodbye cruel world...\n\nuptime: " + client.uptime / 1000 + " seconds\nlifetime: " + life.time / 1000 + " seconds"));
+          life.time += client.uptime;
+          d = d - 1;
+        } else {
+          if (d === 0) {
+            console.log("\n       m u r k e d\n");
+            send('ded');
+            clearInterval(dying);
+            if (true) {
+              murder.insert(ded);
+            }
+            return;
+          }
         }
       }
     }
     var dying = setInterval(death, 1000);
   }
+
   if (message.content.toLowerCase() === 'reboot') {
     console.log('rebooting...');
     message.channel.send('rebooting...')
